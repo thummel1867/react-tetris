@@ -51,5 +51,5 @@ export const useStage = (player, resetPlayer) => {
         player.tetromino,
         resetPlayer]);
 
-    return [stage, setStage];
+    return [stage, setStage, rowsCleared];
 };
