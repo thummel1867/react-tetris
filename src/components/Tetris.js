@@ -8,13 +8,16 @@ import { useGameStatus } from "../hooks/useGameStatus";
 import Stage from "./Stage";
 import Display from "./Display";
 import StartButton from "./StartButton";
-import PauseButton from "./PauseButton"; 
+import PauseButton from "./PauseButton";
+import AudioButton from "./AudioButton";
+import AudioPlayer from "./AudioPlayer"; 
 
 const Tetris = () => {
     const [dropTime, setDropTime] = useState(null);
     const [prevDropTime, setPrevDropTime] = useState(null); 
     const [gameOver, setGameOver] = useState(false);
-    const [isPaused, setIsPaused] = useState(false); 
+    const [isPaused, setIsPaused] = useState(false);
+    const [audioStarted, setAudioStarted] = useState(false); 
     const [player, updatePlayerPos, resetPlayer, playerRotate] = usePlayer();
     const [stage, setStage, rowsCleared] = useStage(player, resetPlayer); 
     const [score, setScore, rows, setRows, level, setLevel] = useGameStatus(rowsCleared);
@@ -94,11 +97,16 @@ const Tetris = () => {
         }
     };
 
+    const toggleAudio = () => {
+        setAudioStarted(prev => !prev);
+    };
+
     return (
         <StyledTetrisWrapper role='button' tabIndex='0' onKeyDown={e => move(e)} onKeyUp={keyUp}>
             <StlyedTetris>
                 <Stage stage={stage}/>
                 <aside>
+                {audioStarted && <AudioPlayer src="/background-music.mp3" />}
                     {gameOver ? (
                         <Display gameOver={gameOver} text='Game Over' />
                     ) : (
@@ -110,6 +118,9 @@ const Tetris = () => {
                     )}
                     <StartButton callback={startGame} />
                     <PauseButton isPaused={isPaused} onTogglePause={togglePause} />
+                    <AudioButton type="audio" onClick={toggleAudio}>
+  {audioStarted ? "Pause Music" : "Play Music"}
+</AudioButton>
                 </aside>
             </StlyedTetris>
         </StyledTetrisWrapper>
