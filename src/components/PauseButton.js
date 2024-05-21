@@ -18,9 +18,9 @@ const StyledPauseButton = styled.button`
 `;
 
 const PauseButton = ({ isPaused, onTogglePause }) => (
-    <StyledPauseButton onClick={onTogglePause}>
-      {isPaused ? 'Resume' : 'Pause'}
-    </StyledPauseButton>
-  );
+  <StyledPauseButton onClick={onTogglePause}>
+    {isPaused ? 'Resume' : 'Pause'}
+  </StyledPauseButton>
+);
 
 export default PauseButton;
